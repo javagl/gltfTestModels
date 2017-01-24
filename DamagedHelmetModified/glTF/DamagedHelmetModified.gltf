@@ -92,11 +92,8 @@
     "image_Default_albedo_9098" : {
       "uri" : "Default_albedo.jpg"
     },
-    "image_Default_MetalSmooth_21596_metallic" : {
-      "uri" : "Default_MetalSmooth_metallic.jpg"
-    },
-    "image_Default_MetalSmooth_21596_roughness" : {
-      "uri" : "Default_MetalSmooth_roughness.jpg"
+    "image_Default_MetalSmooth_21596_metallicRoughness" : {
+      "uri" : "Default_MetalSmooth_metallicRoughness.jpg"
     },
     "image_Default_normal_22700" : {
       "uri" : "Default_normal.jpg"
@@ -113,12 +110,11 @@
       "name" : "Helmet_mat",
       "technique" : "technique_Standard",
       "values" : {
-        "baseColor" : [ 1, 1, 1, 1 ],
+        "baseColorFactor" : [ 1, 1, 1, 1 ],
+        "metallicFactor" : [ 0.75 ],
+        "roughnessFactor" : [ 0.25 ],
         "baseColorTexture" : [ "texture_Default_albedo_9098" ],
-        "metallic" : [ 0.75 ],
-        "metallicTexture" : [ "texture_Default_MetalSmooth_21596_metallic" ],
-        "roughness" : [ 0.75 ],
-        "roughnessTexture" : [ "texture_Default_MetalSmooth_21596_roughness" ],
+        "metallicRoughnessTexture" : [ "texture_Default_MetalSmooth_21596_metallicRoughness" ],
         "normalTexture" : [ "texture_Default_normal_22700" ]
       }
     }
@@ -148,8 +144,8 @@
   "programs" : {
     "program_Standard" : {
       "attributes" : [ "a_position", "a_normal", "a_tangent", "a_texCoord0" ],
-      "fragmentShader" : "frag",
-      "vertexShader" : "vert"
+      "fragmentShader" : "pbrFragmentShader",
+      "vertexShader" : "pbrVertexShader"
     }
   },
   "samplers" : {
@@ -167,12 +163,12 @@
     }
   },
   "shaders" : {
-    "vert" : {
-      "uri" : "pbr-vert.glsl",
+    "pbrVertexShader" : {
+      "uri" : "pbr.vert",
       "type" : 35633
     },
-    "frag" : {
-      "uri" : "pbr-frag.glsl",
+    "pbrFragmentShader" : {
+      "uri" : "pbr.frag",
       "type" : 35632
     }
   },
@@ -203,19 +199,19 @@
           "type" : 35675,
           "semantic" : "MODELVIEWINVERSETRANSPOSE"
         },
-        "baseColor" : {
+        "baseColorFactor" : {
           "type" : 35666
         },
         "baseColorTexture" : {
           "type" : 35678
         },
-        "metallic" : {
+        "metallicFactor" : {
           "type" : 5126
         },
         "metallicTexture" : {
           "type" : 35678
         },
-        "roughness" : {
+        "roughnessFactor" : {
           "type" : 5126
         },
         "roughnessTexture" : {
@@ -239,11 +235,11 @@
       "uniforms" : {
         "u_mvpMatrix" : "mvpMatrix",
         "u_normalMatrix" : "normalMatrix",
-        "u_baseColor" : "baseColor",
+        "u_baseColorFactor" : "baseColorFactor",
         "u_baseColorTexture" : "baseColorTexture",
-        "u_metallic" : "metallic",
+        "u_metallicFactor" : "metallicFactor",
         "u_metallicTexture" : "metallicTexture",
-        "u_roughness" : "roughness",
+        "u_roughnessFactor" : "roughnessFactor",
         "u_roughnessTexture" : "roughnessTexture",
         "u_normalTexture" : "normalTexture",
         "u_lightPosition" : "lightPosition"
@@ -262,26 +258,15 @@
       "target" : 3553,
       "type" : 5121
     },
-    "texture_Default_MetalSmooth_21596_metallic" : {
+    "texture_Default_MetalSmooth_21596_metallicRoughness" : {
       "format" : 6408,
       "internalFormat" : 6408,
       "sampler" : "sampler_1_0_m",
-      "source" : "image_Default_MetalSmooth_21596_metallic",
-      "target" : 3553,
-      "type" : 5121
-    },
-    "texture_Default_MetalSmooth_21596_roughness" : {
-      "format" : 6408,
-      "internalFormat" : 6408,
-      "sampler" : "sampler_1_0_m",
-      "source" : "image_Default_MetalSmooth_21596_roughness",
+      "source" : "image_Default_MetalSmooth_21596_metallicRoughness",
       "target" : 3553,
       "type" : 5121
     },
     "texture_Default_normal_22700" : {
-      "extras" : {
-        "yUp" : false
-      },
       "format" : 6408,
       "internalFormat" : 6408,
       "sampler" : "sampler_1_0_m",

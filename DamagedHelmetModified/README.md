@@ -17,6 +17,8 @@ https://github.com/moneimne/WebGL-PBR/
 The following modifications have been made:
 
 - The textures have been flipped vertically
+- The "metallic" and "roughness" textures have been combined into 
+  a "metallicRoughness" texture
 - The `glTF` file was modified:
   - Duplications and transforms of nodes have been removed
   - It does not use any extension, but instead refers to the 

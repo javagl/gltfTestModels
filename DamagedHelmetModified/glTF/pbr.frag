@@ -4,14 +4,14 @@ uniform vec3 u_lightPosition;
 uniform samplerCube u_envTexture;
 
 uniform sampler2D u_baseColorTexture;
-uniform sampler2D u_metallicTexture;
-uniform sampler2D u_roughnessTexture;
+uniform sampler2D u_metallicRoughnessTexture;
 uniform sampler2D u_normalTexture;
 
+uniform vec4 u_baseColorFactor;
+uniform float u_metallicFactor;
+uniform float u_roughnessFactor;
+
 uniform vec3 u_camera;
-uniform vec3 u_baseColor;
-uniform float u_metallic;
-uniform float u_roughness;
 
 varying vec2 v_texCoord0;
 varying vec3 v_tangent;
@@ -23,9 +23,9 @@ const float M_PI = 3.141592653589793;
 void main(){
 
   vec3 lightPosition = vec3(3,3,5);
-  vec3 cameraPosition = vec3(0,0,5);
+  vec3 cameraPosition = vec3(0,0,15);
   
-  vec4 baseColor = texture2D(u_baseColorTexture, v_texCoord0);
+  vec4 baseColor = texture2D(u_baseColorTexture, v_texCoord0) * u_baseColorFactor;
 
   // Normal Map
   vec3 n = normalize(v_normal);
@@ -44,13 +44,15 @@ void main(){
   float nDotH = max(0.0, dot(n,h));
   float vDotH = max(0.0, dot(v,h));
 
+  vec4 metallicRoughness = texture2D(u_metallicRoughnessTexture, v_texCoord0);
+  
   // Fresnel Term: Schlick's Approximation
-  float metallic = texture2D(u_metallicTexture, v_texCoord0).x;
+  float metallic = metallicRoughness.x * u_metallicFactor;
   vec3 specularColor = (baseColor.rgb * metallic) + (vec3(0.04) * (1.0 - metallic));
   vec3 f = specularColor + ((1.0 - specularColor) * pow(1.0 - vDotH, 5.0));
 
   // Geometric Attenuation Term: Schlick-Beckmann
-  float roughness = texture2D(u_roughnessTexture, v_texCoord0).x;
+  float roughness = metallicRoughness.y * u_roughnessFactor;
   float a = roughness * roughness; // UE4 definition
   float k = ((roughness + 1.0) * (roughness + 1.0)) / 8.0;
   float g1L = nDotL / ((nDotL * (1.0 - k)) + k);
