@@ -1,6 +1,5 @@
 precision mediump float;
 
-uniform vec3 u_lightPosition;
 uniform samplerCube u_envTexture;
 
 uniform sampler2D u_baseColorTexture;
@@ -12,6 +11,7 @@ uniform float u_metallicFactor;
 uniform float u_roughnessFactor;
 
 uniform vec3 u_camera;
+uniform vec3 u_lightPosition;
 
 varying vec2 v_texCoord0;
 varying vec3 v_tangent;

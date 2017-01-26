@@ -202,19 +202,16 @@
         "baseColorFactor" : {
           "type" : 35666
         },
-        "baseColorTexture" : {
-          "type" : 35678
-        },
         "metallicFactor" : {
           "type" : 5126
-        },
-        "metallicTexture" : {
-          "type" : 35678
         },
         "roughnessFactor" : {
           "type" : 5126
         },
-        "roughnessTexture" : {
+        "baseColorTexture" : {
+          "type" : 35678
+        },
+        "metallicRoughnessTexture" : {
           "type" : 35678
         },
         "normalTexture" : {
@@ -236,11 +233,10 @@
         "u_mvpMatrix" : "mvpMatrix",
         "u_normalMatrix" : "normalMatrix",
         "u_baseColorFactor" : "baseColorFactor",
-        "u_baseColorTexture" : "baseColorTexture",
         "u_metallicFactor" : "metallicFactor",
-        "u_metallicTexture" : "metallicTexture",
         "u_roughnessFactor" : "roughnessFactor",
-        "u_roughnessTexture" : "roughnessTexture",
+        "u_baseColorTexture" : "baseColorTexture",
+        "u_metallicRoughnessTexture" : "metallicRoughnessTexture",
         "u_normalTexture" : "normalTexture",
         "u_lightPosition" : "lightPosition"
       },
