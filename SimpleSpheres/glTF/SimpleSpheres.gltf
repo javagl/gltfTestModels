@@ -186,7 +186,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m0_r0",
@@ -197,7 +197,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m0_r25",
@@ -208,7 +208,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m0_r50",
@@ -219,7 +219,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m0_r75",
@@ -230,7 +230,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m0_r100",
@@ -241,7 +241,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m25_r0",
@@ -252,7 +252,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m25_r25",
@@ -263,7 +263,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m25_r50",
@@ -274,7 +274,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m25_r75",
@@ -285,7 +285,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m25_r100",
@@ -296,7 +296,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m50_r0",
@@ -307,7 +307,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m50_r25",
@@ -318,7 +318,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m50_r50",
@@ -329,7 +329,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m50_r75",
@@ -340,7 +340,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m50_r100",
@@ -351,7 +351,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m75_r0",
@@ -362,7 +362,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m75_r25",
@@ -373,7 +373,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m75_r50",
@@ -384,7 +384,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m75_r75",
@@ -395,7 +395,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m75_r100",
@@ -406,7 +406,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m100_r0",
@@ -417,7 +417,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m100_r25",
@@ -428,7 +428,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m100_r50",
@@ -439,7 +439,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m100_r75",
@@ -450,7 +450,7 @@
       "primitives" : [ {
         "attributes" : {
           "POSITION" : "positionsAccessor",
-          "NORMAL" : "positionsAccessor"
+          "NORMAL" : "normalsAccessor"
         },
         "indices" : "indicesAccessor",
         "material" : "material_m100_r100",
