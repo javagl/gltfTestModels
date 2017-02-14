@@ -1,181 +1,205 @@
-// From https://raw.githubusercontent.com/tsturm/glTF/e0e419a11ceae9edea541c58a512f20bf1e8f2c7/extensions/Vendor/FRAUNHOFER_materials_pbr/example/untextured-pbr/index.html
-// with minor adjustments
-precision highp float;
+// References:
+// [1] : Real Shading in Unreal Engine 4 (B. Karis) 
+//       http://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_notes_v2.pdf
+// [2] : Moving Frostbite to Physically Based Rendering 2.0 (S. Lagarde)
+//       http://www.frostbite.com/wp-content/uploads/2014/11/course_notes_moving_frostbite_to_pbr_v2.pdf
+// [3] : Microfacet Models for Refraction through Rough Surfaces (B. Walter)
+//       http://www.cs.cornell.edu/~srm/publications/EGSR07-btdf.pdf
+// [4] : An Inexpensive BRDF Model for Physically-based Rendering (C. Schlick)
+//       https://www.cs.virginia.edu/~jdl/bib/appearance/analytic models/schlick94b.pdf
+// [5] : A Reflectance Model for Computer Graphics (R. Cook)
+//       http://graphics.pixar.com/library/ReflectanceModel/paper.pdf
 
+
+precision mediump float;
+
+uniform sampler2D u_baseColorTexture;
+uniform sampler2D u_metallicRoughnessTexture;
+uniform sampler2D u_normalTexture;
+uniform sampler2D u_occlusionTexture;
+uniform sampler2D u_emissionTexture;
+
+uniform int u_hasBaseColorTexture;
+uniform int u_hasMetallicRoughnessTexture;
+uniform int u_hasNormalTexture;
+uniform int u_hasOcclusionTexture;
+uniform int u_hasEmissionTexture;
+
+uniform vec4 u_baseColorFactor;
 uniform float u_metallicFactor;
 uniform float u_roughnessFactor;
+uniform float u_normalScale;
+uniform float u_occlusionStrength;
+uniform vec3 u_emissionFactor;
+
+varying vec3 v_lightPosition;
+
+varying vec2 v_baseColorTexCoord;
+varying vec2 v_metallicRoughnessTexCoord;
+varying vec2 v_normalTexCoord;
+varying vec2 v_occlusionTexCoord;
+varying vec2 v_emissionTexCoord;
 
 varying vec3 v_position;
 varying vec3 v_normal; 
+varying vec3 v_tangent;
 
-#define PI 3.14159265359
-#define RECIPROCAL_PI 0.31830988618
-#define EPSILON 1e-6
-#define DEFAULT_SPECULAR_COEFFICIENT 0.04
-#define saturate(a) clamp( a, 0.0, 1.0 )
+const float M_PI = 3.141592653589793;
 
-float pow2(const in float x) { return x*x; }
 
-struct IncidentLight
+// Computation of the specular distribution of microfacet normals on the 
+// surface. This is also referred to as "NDF", the "normal distribution 
+// function". It receives the half-vector H, the surface normal N, and the 
+// roughness. This implementation is based on the description in [1], which 
+// is supposed to be a summary of [3], although I didn't do the maths...
+
+float microfacetDistribution(
+    vec3 H, vec3 N, float roughness)
 {
-    vec3 color;
-    vec3 direction;
-};
-struct ReflectedLight
-{
-    vec3 diffuse;
-    vec3 specular;
-};
-struct GeometricContext
-{
-    vec3 position;
-    vec3 normal;
-    vec3 viewDir;
-};
-struct PhysicalMaterial
-{
-    vec3    diffuseColor;
-    float   specularRoughness;
-    vec3    specularColor;
-};
-
-
-/////////////////////////////////////////////////////////
-//              DIFFUSE BRDF EVALUATION                //
-/////////////////////////////////////////////////////////
-
-vec3 BRDF_Diffuse_Lambert(const in vec3 diffuseColor)
-{
-    return RECIPROCAL_PI * diffuseColor;
-}
-
-
-/////////////////////////////////////////////////////////
-//             SPECULAR BRDF EVALUATION                //
-/////////////////////////////////////////////////////////
-
-vec3 F_Schlick(const in vec3 specularColor, const in float dotLH)
-{
-    float fresnel = exp2( ( -5.55473 * dotLH - 6.98316 ) * dotLH );
-    return ( 1.0 - specularColor ) * fresnel + specularColor;
-}
-
-float G_GGX_Smith(const in float alpha, const in float dotNL, const in float dotNV)
-{
-    float a2 = pow2( alpha );
-    float gl = dotNL + sqrt( a2 + ( 1.0 - a2 ) * pow2( dotNL ) );
-    float gv = dotNV + sqrt( a2 + ( 1.0 - a2 ) * pow2( dotNV ) );
-    return 1.0 / ( gl * gv );
-}
-
-float G_GGX_SmithCorrelated(const in float alpha, const in float dotNL, const in float dotNV)
-{
-    float a2 = pow2( alpha );
-    float gv = dotNL * sqrt( a2 + ( 1.0 - a2 ) * pow2( dotNV ) );
-    float gl = dotNV * sqrt( a2 + ( 1.0 - a2 ) * pow2( dotNL ) );
-    return 0.5 / max( gv + gl, EPSILON );
-}
-
-float D_GGX(const in float alpha, const in float dotNH)
-{
-    float a2 = pow2( alpha );
-    float denom = pow2( dotNH ) * ( a2 - 1.0 ) + 1.0;
-    return RECIPROCAL_PI * a2 / pow2( denom );
-}
-
-vec3 BRDF_Specular_GGX(const in IncidentLight incidentLight,
-                       const in GeometricContext geometry,
-                       const in vec3 specularColor,
-                       const in float roughness             )
-{
-    float alpha = pow2( roughness );
-    vec3 halfDir = normalize( incidentLight.direction + geometry.viewDir );
-    float dotNL = saturate( dot( geometry.normal, incidentLight.direction ) );
-    float dotNV = saturate( dot( geometry.normal, geometry.viewDir ) );
-    float dotNH = saturate( dot( geometry.normal, halfDir ) );
-    float dotLH = saturate( dot( incidentLight.direction, halfDir ) );
+    float alpha = roughness * roughness;
+    float alpha_squared = alpha * alpha;
     
-    vec3  F = F_Schlick( specularColor, dotLH );
-    float G = G_GGX_SmithCorrelated( alpha, dotNL, dotNV );
-    float D = D_GGX( alpha, dotNH );
+    float NdotH = clamp(dot(N, H), 0.0, 1.0);
+    float NdotH_squared = NdotH * NdotH;
     
-    return F * (G * D);
+    float x = (NdotH * NdotH) * (alpha_squared - 1.0) + 1.0;
+    return alpha_squared / (M_PI * x * x);
 }
 
+// Computation of the Fresnel specular reflectance, using the approximation 
+// described in [4]. It receives the specular color, the 
+// direction from the surface point to the viewer V, and the half-vector H. 
 
-/////////////////////////////////////////////////////////
-//          MAIN LIGHTING COMPUTATION FUNCTION         //
-/////////////////////////////////////////////////////////
-
-void computeLighting(const in IncidentLight directLight,
-                     const in GeometricContext geometry,
-                     const in PhysicalMaterial material,
-                     inout ReflectedLight reflectedLight)
+vec3 specularReflectance(
+    vec3 specularColor, vec3 V, vec3 H)
 {
-    float dotNL     = saturate(dot(geometry.normal, directLight.direction));
-    vec3 irradiance = dotNL * directLight.color;
-    irradiance *= PI;
-    
-    reflectedLight.specular += irradiance * BRDF_Specular_GGX(directLight,
-                                                              geometry,
-                                                              material.specularColor,
-                                                              material.specularRoughness);
-    reflectedLight.diffuse  += irradiance * BRDF_Diffuse_Lambert(material.diffuseColor);
+    float HdotV = clamp(dot(H, V), 0.0, 1.0);
+    return specularColor + (1.0 - specularColor) * pow(1.0 - HdotV, 5.0);
 }
 
-/////////////////////////////////////////////////////////
-//                  MAIN PROGRAM                       //
-/////////////////////////////////////////////////////////
+// Computation of the geometric shadowing or "specular geometric attenuation". 
+// This describes how much the microfacets of the surface shadow each other, 
+// based on the roughness of the surface. 
+// This implementation is based on [1], which contains some odd tweaks and 
+// cross-references to [3] and [4], which I did not follow in all depth. 
+// Let's hope they know their stuff.
+// It receives the roughness value, the normal vector of the surface N,
+// the vector from the surface to the viewer V, the vector from the
+// surface to the light L, and the half vector H
+
+float specularAttenuation(
+    float roughness, vec3 V, vec3 N, vec3 L, vec3 H)
+{
+    float NdotL = clamp(dot(N, L), 0.0, 1.0);
+    float NdotV = clamp(dot(N, V), 0.0, 1.0);
+    float k = (roughness + 1.0) * (roughness + 1.0) / 8.0;
+    
+    float GL = NdotL / (NdotL * (1.0 - k) + k);
+    float GV = NdotV / (NdotV * (1.0 - k) + k);
+
+    return GL * GV;
+}
+
+
+
+
+
 void main()
 {
-    // light definitions (simple directional lights)
-    IncidentLight directLight0;
-    directLight0.direction = vec3(0.0, 0.0, 1.0);
-    //directLight0.color     = vec3(0.7, 0.7, 0.7);
-    directLight0.color     = 0.7 * vec3(1.0, 1.0, 1.0);
-    
-    IncidentLight directLight1;
-    directLight1.direction = vec3(-0.71, 0.71, 0.0);
-    //directLight1.color     = vec3(0.5, 0.5, 0.5);
-    directLight1.color     = 0.7 * vec3(0.8, 0.6, 1.0);
-    
-    IncidentLight directLight2;
-    directLight2.direction = vec3(0.71, 0.71, 0.0);
-    //directLight2.color     = vec3(0.5, 0.5, 0.5);
-    directLight2.color     = 0.7 * vec3(1.0, 0.8, 0.6);
-    
-    // material definition
-    
-    vec4 diffuseColor = vec4(1.0, 1.0, 1.0, 1.0);
-    float roughnessFactor = u_roughnessFactor;
-    float metallicFactor = u_metallicFactor;
+    // Fetch the base color
+    vec4 baseColor = vec4(1.0);
+    if (u_hasBaseColorTexture != 0)
+    {
+        baseColor = texture2D(u_baseColorTexture, v_baseColorTexCoord) * u_baseColorFactor;
+    }
 
-    PhysicalMaterial material;                
-    material.diffuseColor      = diffuseColor.rgb * ( 1.0 - metallicFactor );
-    material.specularRoughness = clamp( roughnessFactor, 0.04, 1.0 );
-    material.specularColor     = mix( vec3( DEFAULT_SPECULAR_COEFFICIENT ), diffuseColor.rgb, metallicFactor );
-    
-    // local geometry definition
-    GeometricContext geometry;
-    geometry.position = v_position;
-    geometry.normal   = normalize(v_normal);
-    geometry.viewDir  = normalize(-v_position);
-    
-    // lighting computation
-    ReflectedLight reflectedLight = ReflectedLight(
-        vec3( 0.0, 0.0, 0.0 ), //diffuse
-        vec3( 0.0, 0.0, 0.0 )  //specular
-    );
-    computeLighting(directLight0, geometry, material, reflectedLight);
-    computeLighting(directLight1, geometry, material, reflectedLight);
-    computeLighting(directLight2, geometry, material, reflectedLight);
+    // Fetch the metallic and roughness values
+    vec4 metallicRoughness = vec4(1.0);
+    if (u_hasMetallicRoughnessTexture != 0)
+    {
+        metallicRoughness = texture2D(u_metallicRoughnessTexture, v_metallicRoughnessTexCoord);
+    }
+    float metallic = metallicRoughness.x * u_metallicFactor;
+    float roughness = metallicRoughness.y * u_roughnessFactor;
 
-    vec3 outgoingLight = reflectedLight.diffuse + reflectedLight.specular;
-    vec4 finalColor = vec4(outgoingLight, diffuseColor.a);
+    vec3 N = normalize(v_normal);
     
+    // Fetch the normal from the normal texture
+    if (u_hasNormalTexture != 0)
+    {
+        vec3 textureNormal = texture2D(u_normalTexture, v_normalTexCoord).rgb;
+        vec3 normalizedTextureNormal = normalize(textureNormal * 2.0 - 1.0);
+        vec3 scaledTextureNormal = normalizedTextureNormal * u_normalScale;
+        
+        // Compute the TBN (tangent, bitangent, normal) matrix
+        // that maps the normal of the normal texture from the
+        // surface coordinate system into view space
+        vec3 T = normalize(v_tangent);
+        vec3 B = cross(N, T);
+        mat3 TBN = mat3(T, B, N);
+        
+        N = normalize(TBN * scaledTextureNormal);
+    }
+
+    // Compute the vector from the surface point to the light (L),
+    // the vector from the surface point to the viewer (V),
+    // and the half-vector between both (H)
+    // The camera position in view space is fixed.
+    vec3 cameraPosition = vec3(0.0, 0.0, 1.0);
+    vec3 L = normalize(v_lightPosition - v_position);
+    vec3 V = normalize(cameraPosition - v_position);
+    vec3 H = normalize(L + V);
+
+    
+    // Copute the microfacet distribution (D)
+    float microfacetDistribution = 
+        microfacetDistribution(H, N, roughness);
+    
+    // Compute the specularly reflected color (F)
+    vec3 specularInputColor = (baseColor.rgb * metallic);
+    vec3 specularReflectance = 
+        specularReflectance(specularInputColor, V, H);
+    
+    // Compute the geometric specular attenuation (G)
+    float specularAttenuation = 
+       specularAttenuation(roughness, V, N, L, H);
+    
+    
+    // Compute the BRDF, as it is described in [1], with a reference
+    // to [5], although the formula does not seem to appear there.
+    // However.
+    float NdotV = clamp(dot(N,V), 0.0, 1.0);
+    float NdotL = clamp(dot(N,L), 0.0, 1.0);
+    vec3 specularBRDF = 
+        (microfacetDistribution * specularReflectance * specularAttenuation) /
+        (4.0 * NdotL * NdotV);
+
+    vec3 diffuseColor = baseColor.rgb * (1.0 - metallic);
+    vec4 diffuse = vec4(diffuseColor * NdotL, 1.0);
+    vec4 specular = vec4(specularInputColor * specularBRDF, 1.0);
+
+    vec4 occlusion = vec4(1.0);
+    if (u_hasOcclusionTexture != 0)
+    {
+        occlusion = texture2D(u_occlusionTexture, v_occlusionTexCoord);
+    }
+    vec4 occlusionFactor = vec4(1.0) - ((vec4(1.0) - occlusion) * u_occlusionStrength);
+    
+    vec4 sampledEmission = vec4(1.0);
+    if (u_hasEmissionTexture != 0)
+    {
+        sampledEmission = texture2D(u_emissionTexture, v_emissionTexCoord);
+    }
+    vec4 emission = sampledEmission * vec4(u_emissionFactor, 1.0);
+    
+    vec4 mainColor = clamp(diffuse + specular, 0.0, 1.0);
+    vec4 finalColor = clamp(mainColor * occlusionFactor + emission, 0.0, 1.0);
+    
+    //finalColor = vec4(1.0);
     //finalColor.r = u_metallicFactor;
     //finalColor.g = u_roughnessFactor;
-    //finalColor.b = 0.0;
     
     gl_FragColor = finalColor;
 }
+
+

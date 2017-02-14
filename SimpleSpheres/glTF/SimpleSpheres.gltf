@@ -8,179 +8,255 @@
     "material_m0_r0" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.0 ],
-        "roughnessFactor" : [ 0.0 ]
+        "roughnessFactor" : [ 0.0 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m0_r25" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.0 ],
-        "roughnessFactor" : [ 0.25 ]
+        "roughnessFactor" : [ 0.25 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m0_r50" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.0 ],
-        "roughnessFactor" : [ 0.5 ]
+        "roughnessFactor" : [ 0.5 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m0_r75" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.0 ],
-        "roughnessFactor" : [ 0.75 ]
+        "roughnessFactor" : [ 0.75 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m0_r100" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.0 ],
-        "roughnessFactor" : [ 1.0 ]
+        "roughnessFactor" : [ 1.0 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m25_r0" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.25 ],
-        "roughnessFactor" : [ 0.0 ]
+        "roughnessFactor" : [ 0.0 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m25_r25" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.25 ],
-        "roughnessFactor" : [ 0.25 ]
+        "roughnessFactor" : [ 0.25 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m25_r50" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.25 ],
-        "roughnessFactor" : [ 0.5 ]
+        "roughnessFactor" : [ 0.5 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m25_r75" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.25 ],
-        "roughnessFactor" : [ 0.75 ]
+        "roughnessFactor" : [ 0.75 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m25_r100" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.25 ],
-        "roughnessFactor" : [ 1.0 ]
+        "roughnessFactor" : [ 1.0 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m50_r0" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.5 ],
-        "roughnessFactor" : [ 0.0 ]
+        "roughnessFactor" : [ 0.0 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m50_r25" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.5 ],
-        "roughnessFactor" : [ 0.25 ]
+        "roughnessFactor" : [ 0.25 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m50_r50" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.5 ],
-        "roughnessFactor" : [ 0.5 ]
+        "roughnessFactor" : [ 0.5 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m50_r75" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.5 ],
-        "roughnessFactor" : [ 0.75 ]
+        "roughnessFactor" : [ 0.75 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m50_r100" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.5 ],
-        "roughnessFactor" : [ 1.0 ]
+        "roughnessFactor" : [ 1.0 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m75_r0" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.75 ],
-        "roughnessFactor" : [ 0.0 ]
+        "roughnessFactor" : [ 0.0 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m75_r25" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.75 ],
-        "roughnessFactor" : [ 0.25 ]
+        "roughnessFactor" : [ 0.25 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m75_r50" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.75 ],
-        "roughnessFactor" : [ 0.5 ]
+        "roughnessFactor" : [ 0.5 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m75_r75" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.75 ],
-        "roughnessFactor" : [ 0.75 ]
+        "roughnessFactor" : [ 0.75 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m75_r100" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 0.75 ],
-        "roughnessFactor" : [ 1.0 ]
+        "roughnessFactor" : [ 1.0 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m100_r0" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 1.0 ],
-        "roughnessFactor" : [ 0.0 ]
+        "roughnessFactor" : [ 0.0 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m100_r25" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 1.0 ],
-        "roughnessFactor" : [ 0.25 ]
+        "roughnessFactor" : [ 0.25 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m100_r50" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 1.0 ],
-        "roughnessFactor" : [ 0.5 ]
+        "roughnessFactor" : [ 0.5 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m100_r75" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 1.0 ],
-        "roughnessFactor" : [ 0.75 ]
+        "roughnessFactor" : [ 0.75 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     },
     "material_m100_r100" : {
       "technique" : "pbrTechnique",
       "values" : {
+        "baseColorFactor" : [ 0.0, 0.0, 0.0, 1.0 ],
         "metallicFactor" : [ 1.0 ],
-        "roughnessFactor" : [ 1.0 ]
+        "roughnessFactor" : [ 1.0 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     }
   },
+  
   "meshes" : {
     "mesh_m0_r0" : {
       "primitives" : [ {
@@ -564,8 +640,149 @@
     }
   },
   
+  "techniques" : {
+    "pbrTechnique" : {
+      "program" : "pbrProgram",
+      "parameters" : {
+        "position" : {
+          "type" : 35666,
+          "semantic" : "POSITION"
+        },
+        "normal" : {
+          "type" : 35666,
+          "semantic" : "NORMAL"
+        },
+        "tangent" : {
+          "type" : 35666,
+          "semantic" : "TANGENT"
+        },
+        
+        "modelViewMatrix" : {
+          "type" : 35676,
+          "semantic" : "MODELVIEW"
+        },
+        "projectionMatrix" : {
+          "type" : 35676,
+          "semantic" : "PROJECTION"
+        },
+        "normalMatrix" : {
+          "type" : 35675,
+          "semantic" : "MODELVIEWINVERSETRANSPOSE"
+        },
+        
+        "baseColorFactor" : {
+          "type" : 35666
+        },
+        "baseColorTexture" : {
+          "type" : 35678
+        },
+        "hasBaseColorTexture" : {
+          "type" : 5124
+        },
+        "baseColorTexCoord" : {
+          "semantic": "TEXCOORD_0",
+          "type" : 35664
+        },
+        
+        "metallicFactor" : {
+          "type" : 5126
+        },
+        "roughnessFactor" : {
+          "type" : 5126
+        },
+        "metallicRoughnessTexture" : {
+          "type" : 35678
+        },
+        "hasMetallicRoughnessTexture" : {
+          "type" : 5124
+        },
+        "metallicRoughnessTexCoord" : {
+          "semantic": "TEXCOORD_0",
+          "type" : 35664
+        },
+        
+        "normalTexture" : {
+          "type" : 35678
+        },
+        "hasNormalTexture" : {
+          "type" : 5124
+        },
+        "normalTexCoord" : {
+          "semantic": "TEXCOORD_0",
+          "type" : 35664
+        },
+        "normalScale" : {
+          "type" : 5126
+        },
+
+        "occlusionTexture" : {
+          "type" : 35678
+        },
+        "hasOcclusionTexture" : {
+          "type" : 5124
+        },
+        "occlusionTexCoord" : {
+          "semantic": "TEXCOORD_0",
+          "type" : 35664
+        },
+        "occlusionStrength" : {
+          "type" : 5126
+        },
+
+        "emissionTexture" : {
+          "type" : 35678
+        },
+        "hasEmissionTexture" : {
+          "type" : 5124
+        },
+        "emissionTexCoord" : {
+          "semantic": "TEXCOORD_0",
+          "type" : 35664
+        },
+        "emissionFactor" : {
+          "type" : 35665
+        }
+        
+      },
+      "attributes" : {
+        "a_position" : "position",
+        "a_normal" : "normal"
+      },
+      "uniforms" : {
+        "u_modelViewMatrix" : "modelViewMatrix",
+        "u_projectionMatrix" : "projectionMatrix",
+        "u_normalMatrix" : "normalMatrix",
+        "u_baseColorFactor" : "baseColorFactor",
+        "u_metallicFactor" : "metallicFactor",
+        "u_roughnessFactor" : "roughnessFactor",
+        "u_occlusionStrength" : "occlusionStrength",
+        "u_emissionFactor" : "emissionFactor"
+      },
+      "states" : {
+        "enable" : [ 2884, 2929 ]
+      }
+    }
+  },
   
-  
+  "programs" : {
+    "pbrProgram" : {
+      "attributes" : [ "a_position", "a_normal" ],
+      "fragmentShader" : "pbrFragmentShader",
+      "vertexShader" : "pbrVertexShader"
+    }
+  },
+  "shaders" : {
+    "pbrVertexShader" : {
+      "uri" : "pbr.vert",
+      "type" : 35633
+    },
+    "pbrFragmentShader" : {
+      "uri" : "pbr.frag",
+      "type" : 35632
+    }
+  },
+
+
   "buffers" : {
     "geometryBuffer" : {
       "uri" : "sphere_T5120_P4N4.bin",
@@ -615,74 +832,8 @@
       "max" : [ 1.0, 1.0, 1.0, 1.0 ]
     }
   },
-  
-  "programs" : {
-    "pbrProgram" : {
-      "attributes" : [ "a_position", "a_normal" ],
-      "fragmentShader" : "pbrFragmentShader",
-      "vertexShader" : "pbrVertexShader"
-    }
-  },
-  "shaders" : {
-    "pbrVertexShader" : {
-      "uri" : "pbr.vert",
-      "type" : 35633
-    },
-    "pbrFragmentShader" : {
-      "uri" : "pbr.frag",
-      "type" : 35632
-    }
-  },
-  "techniques" : {
-    "pbrTechnique" : {
-      "program" : "pbrProgram",
-      "parameters" : {
-        "position" : {
-          "type" : 35666,
-          "semantic" : "POSITION"
-        },
-        "normal" : {
-          "type" : 35666,
-          "semantic" : "NORMAL"
-        },
-        
-        "modelViewMatrix" : {
-          "type" : 35676,
-          "semantic" : "MODELVIEW"
-        },
-        "projectionMatrix" : {
-          "type" : 35676,
-          "semantic" : "PROJECTION"
-        },
-        "normalMatrix" : {
-          "type" : 35675,
-          "semantic" : "MODELVIEWINVERSETRANSPOSE"
-        },
-        
-        "metallicFactor" : {
-          "type" : 5126
-        },
-        "roughnessFactor" : {
-          "type" : 5126
-        }
-        
-      },
-      "attributes" : {
-        "a_position" : "position",
-        "a_normal" : "normal"
-      },
-      "uniforms" : {
-        "u_modelViewMatrix" : "modelViewMatrix",
-        "u_normalMatrix" : "normalMatrix",
-        "u_projectionMatrix" : "projectionMatrix",
-        "u_metallicFactor" : "metallicFactor",
-        "u_roughnessFactor" : "roughnessFactor"
-      },
-      "states" : {
-        "enable" : [ 2884, 2929 ]
-      }
-    }
-  },
+
+
   "asset" : {
     "version" : "1.1"
   }

@@ -185,14 +185,20 @@ void main()
     }
     vec4 occlusionFactor = vec4(1.0) - ((vec4(1.0) - occlusion) * u_occlusionStrength);
     
-    vec4 emission = vec4(1.0);
+    vec4 sampledEmission = vec4(1.0);
     if (u_hasEmissionTexture != 0)
     {
-        emission = texture2D(u_emissionTexture, v_emissionTexCoord) * vec4(u_emissionFactor, 1.0);
+        sampledEmission = texture2D(u_emissionTexture, v_emissionTexCoord);
     }
+    vec4 emission = sampledEmission * vec4(u_emissionFactor, 1.0);
     
     vec4 mainColor = clamp(diffuse + specular, 0.0, 1.0);
     vec4 finalColor = clamp(mainColor * occlusionFactor + emission, 0.0, 1.0);
+    
+    //finalColor = vec4(1.0);
+    //finalColor.r = u_metallicFactor;
+    //finalColor.g = u_roughnessFactor;
+    
     gl_FragColor = finalColor;
 }
 
