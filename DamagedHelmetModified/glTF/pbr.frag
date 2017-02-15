@@ -9,7 +9,8 @@
 //       https://www.cs.virginia.edu/~jdl/bib/appearance/analytic models/schlick94b.pdf
 // [5] : A Reflectance Model for Computer Graphics (R. Cook)
 //       http://graphics.pixar.com/library/ReflectanceModel/paper.pdf
-
+// [6] : Crafting a Next-Gen Material Pipeline for The Order: 1886 (D. Neubelt)
+//       http://blog.selfshadow.com/publications/s2013-shading-course/rad/s2013_pbs_rad_notes.pdf
 
 precision mediump float;
 
@@ -140,7 +141,7 @@ void main()
         
         N = normalize(TBN * scaledTextureNormal);
     }
-
+    
     // Compute the vector from the surface point to the light (L),
     // the vector from the surface point to the viewer (V),
     // and the half-vector between both (H)
@@ -154,7 +155,7 @@ void main()
     // Copute the microfacet distribution (D)
     float microfacetDistribution = 
         microfacetDistribution(H, N, roughness);
-    
+        
     // Compute the specularly reflected color (F)
     vec3 specularInputColor = (baseColor.rgb * metallic);
     vec3 specularReflectance = 
@@ -164,15 +165,21 @@ void main()
     float specularAttenuation = 
        specularAttenuation(roughness, V, N, L, H);
     
-    
     // Compute the BRDF, as it is described in [1], with a reference
     // to [5], although the formula does not seem to appear there.
     // However.
-    float NdotV = clamp(dot(N,V), 0.0, 1.0);
-    float NdotL = clamp(dot(N,L), 0.0, 1.0);
-    vec3 specularBRDF = 
-        (microfacetDistribution * specularReflectance * specularAttenuation) /
-        (4.0 * NdotL * NdotV);
+    // The seemingly arbitrary clamping to avoid divide-by-zero
+    // was inspired by [6].
+    float NdotV = dot(N,V);
+    float NdotL = dot(N,L);
+    vec3 specularBRDF = vec3(0.0);
+    if (NdotV > 0.0001 && NdotL > 0.0001)
+    {
+        float d = microfacetDistribution;
+        vec3 f = specularReflectance;
+        float g = specularAttenuation;
+        specularBRDF = (d * f * g) / (4.0 * NdotL * NdotV);
+    }
 
     vec3 diffuseColor = baseColor.rgb * (1.0 - metallic);
     vec4 diffuse = vec4(diffuseColor * NdotL, 1.0);
@@ -195,7 +202,7 @@ void main()
     vec4 mainColor = clamp(diffuse + specular, 0.0, 1.0);
     vec4 finalColor = clamp(mainColor * occlusionFactor + emission, 0.0, 1.0);
     
-    //finalColor = vec4(1.0);
+    //finalColor = vec4(0.0, 0.0, 0.0, 1.0);
     //finalColor.r = u_metallicFactor;
     //finalColor.g = u_roughnessFactor;
     

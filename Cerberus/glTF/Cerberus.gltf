@@ -140,13 +140,18 @@
     "pbrMaterial" : {
       "technique" : "pbrTechnique",
       "values" : {
-        "baseColorFactor" : [ 2.0, 2.0, 2.0, 1.0 ],
+        "baseColorFactor" : [ 2.0, 2.0, 2.0, 2.0 ],
         "baseColorTexture" : "textureA",
+        "hasBaseColorTexture" : [ 1 ],
         "metallicFactor" : [ 0.8 ],
         "roughnessFactor" : [ 1.0 ],
         "metallicRoughnessTexture" : "textureMR",
+        "hasMetallicRoughnessTexture" : [ 1 ],
         "normalTexture" : "textureN",
-        "normalScale" : [ 1.0 ]
+        "hasNormalTexture" : [ 1 ],
+        "normalScale" : [ 1.0 ],
+        "occlusionStrength" : [ 0.0 ],
+        "emissionFactor" : [ 0.0, 0.0, 0.0 ]
       }
     }
   },
@@ -161,6 +166,10 @@
         "normal" : {
           "type" : 35666,
           "semantic" : "NORMAL"
+        },
+        "tangent" : {
+          "type" : 35666,
+          "semantic" : "TANGENT"
         },
         
         "modelViewMatrix" : {
@@ -182,6 +191,9 @@
         "baseColorTexture" : {
           "type" : 35678
         },
+        "hasBaseColorTexture" : {
+          "type" : 5124
+        },
         "baseColorTexCoord" : {
           "semantic": "TEXCOORD_0",
           "type" : 35664
@@ -196,6 +208,9 @@
         "metallicRoughnessTexture" : {
           "type" : 35678
         },
+        "hasMetallicRoughnessTexture" : {
+          "type" : 5124
+        },
         "metallicRoughnessTexCoord" : {
           "semantic": "TEXCOORD_0",
           "type" : 35664
@@ -203,6 +218,9 @@
         
         "normalTexture" : {
           "type" : 35678
+        },
+        "hasNormalTexture" : {
+          "type" : 5124
         },
         "normalTexCoord" : {
           "semantic": "TEXCOORD_0",
@@ -215,6 +233,9 @@
         "occlusionTexture" : {
           "type" : 35678
         },
+        "hasOcclusionTexture" : {
+          "type" : 5124
+        },
         "occlusionTexCoord" : {
           "semantic": "TEXCOORD_0",
           "type" : 35664
@@ -225,6 +246,9 @@
 
         "emissionTexture" : {
           "type" : 35678
+        },
+        "hasEmissionTexture" : {
+          "type" : 5124
         },
         "emissionTexCoord" : {
           "semantic": "TEXCOORD_0",
@@ -250,11 +274,20 @@
         "u_normalMatrix" : "normalMatrix",
         "u_baseColorFactor" : "baseColorFactor",
         "u_baseColorTexture" : "baseColorTexture",
+        "u_hasBaseColorTexture" : "hasBaseColorTexture",
         "u_metallicFactor" : "metallicFactor",
         "u_roughnessFactor" : "roughnessFactor",
         "u_metallicRoughnessTexture" : "metallicRoughnessTexture",
+        "u_hasMetallicRoughnessTexture" : "hasMetallicRoughnessTexture",
         "u_normalTexture" : "normalTexture",
-        "u_normalScale" : "normalScale"
+        "u_hasNormalTexture" : "hasNormalTexture",
+        "u_normalScale" : "normalScale",
+        "u_occlusionTexture" : "occlusionTexture",
+        "u_hasOcclusionTexture" : "hasOcclusionTexture",
+        "u_occlusionStrength" : "occlusionStrength",
+        "u_emissionTexture" : "emissionTexture",
+        "u_hasEmissionTexture" : "hasEmissionTexture",
+        "u_emissionFactor" : "emissionFactor"
       },
       "states" : {
         "enable" : [ 2884, 2929 ]

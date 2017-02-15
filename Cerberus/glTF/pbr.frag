@@ -9,7 +9,8 @@
 //       https://www.cs.virginia.edu/~jdl/bib/appearance/analytic models/schlick94b.pdf
 // [5] : A Reflectance Model for Computer Graphics (R. Cook)
 //       http://graphics.pixar.com/library/ReflectanceModel/paper.pdf
-
+// [6] : Crafting a Next-Gen Material Pipeline for The Order: 1886 (D. Neubelt)
+//       http://blog.selfshadow.com/publications/s2013-shading-course/rad/s2013_pbs_rad_notes.pdf
 
 precision mediump float;
 
@@ -18,6 +19,12 @@ uniform sampler2D u_metallicRoughnessTexture;
 uniform sampler2D u_normalTexture;
 uniform sampler2D u_occlusionTexture;
 uniform sampler2D u_emissionTexture;
+
+uniform int u_hasBaseColorTexture;
+uniform int u_hasMetallicRoughnessTexture;
+uniform int u_hasNormalTexture;
+uniform int u_hasOcclusionTexture;
+uniform int u_hasEmissionTexture;
 
 uniform vec4 u_baseColorFactor;
 uniform float u_metallicFactor;
@@ -100,33 +107,46 @@ float specularAttenuation(
 
 void main()
 {
-    vec3 cameraPosition = vec3(0,0,1);
-
     // Fetch the base color
-    vec4 baseColor = texture2D(u_baseColorTexture, v_baseColorTexCoord) * u_baseColorFactor;
+    vec4 baseColor = vec4(1.0);
+    if (u_hasBaseColorTexture != 0)
+    {
+        baseColor = texture2D(u_baseColorTexture, v_baseColorTexCoord) * u_baseColorFactor;
+    }
 
     // Fetch the metallic and roughness values
-    vec4 metallicRoughness = texture2D(u_metallicRoughnessTexture, v_metallicRoughnessTexCoord);
+    vec4 metallicRoughness = vec4(1.0);
+    if (u_hasMetallicRoughnessTexture != 0)
+    {
+        metallicRoughness = texture2D(u_metallicRoughnessTexture, v_metallicRoughnessTexCoord);
+    }
     float metallic = metallicRoughness.x * u_metallicFactor;
     float roughness = metallicRoughness.y * u_roughnessFactor;
 
-    // Fetch the normal from the normal texture
-    vec3 textureNormal = texture2D(u_normalTexture, v_normalTexCoord).rgb;
-    vec3 normalizedTextureNormal = normalize(textureNormal * 2.0 - 1.0);
-    vec3 scaledTextureNormal = normalizedTextureNormal * u_normalScale;
-
-    // Compute the TBN (tangent, bitangent, normal) matrix
-    // that maps the normal of the normal texture from the
-    // surface coordinate system into view space
-    vec3 T = normalize(v_tangent);
     vec3 N = normalize(v_normal);
-    vec3 B = cross(N, T);
-    mat3 TBN = mat3(T, B, N);
-    N = normalize(TBN * scaledTextureNormal);
-
+    
+    // Fetch the normal from the normal texture
+    if (u_hasNormalTexture != 0)
+    {
+        vec3 textureNormal = texture2D(u_normalTexture, v_normalTexCoord).rgb;
+        vec3 normalizedTextureNormal = normalize(textureNormal * 2.0 - 1.0);
+        vec3 scaledTextureNormal = normalizedTextureNormal * u_normalScale;
+        
+        // Compute the TBN (tangent, bitangent, normal) matrix
+        // that maps the normal of the normal texture from the
+        // surface coordinate system into view space
+        vec3 T = normalize(v_tangent);
+        vec3 B = cross(N, T);
+        mat3 TBN = mat3(T, B, N);
+        
+        N = normalize(TBN * scaledTextureNormal);
+    }
+    
     // Compute the vector from the surface point to the light (L),
     // the vector from the surface point to the viewer (V),
     // and the half-vector between both (H)
+    // The camera position in view space is fixed.
+    vec3 cameraPosition = vec3(0.0, 0.0, 1.0);
     vec3 L = normalize(v_lightPosition - v_position);
     vec3 V = normalize(cameraPosition - v_position);
     vec3 H = normalize(L + V);
@@ -135,7 +155,7 @@ void main()
     // Copute the microfacet distribution (D)
     float microfacetDistribution = 
         microfacetDistribution(H, N, roughness);
-    
+        
     // Compute the specularly reflected color (F)
     vec3 specularInputColor = (baseColor.rgb * metallic);
     vec3 specularReflectance = 
@@ -145,27 +165,47 @@ void main()
     float specularAttenuation = 
        specularAttenuation(roughness, V, N, L, H);
     
-    
     // Compute the BRDF, as it is described in [1], with a reference
     // to [5], although the formula does not seem to appear there.
     // However.
-    float NdotV = clamp(dot(N,V), 0.0, 1.0);
-    float NdotL = clamp(dot(N,L), 0.0, 1.0);
-    vec3 specularBRDF = 
-        (microfacetDistribution * specularReflectance * specularAttenuation) /
-        (4.0 * NdotL * NdotV);
+    // The seemingly arbitrary clamping to avoid divide-by-zero
+    // was inspired by [6].
+    float NdotV = dot(N,V);
+    float NdotL = dot(N,L);
+    vec3 specularBRDF = vec3(0.0);
+    if (NdotV > 0.0001 && NdotL > 0.0001)
+    {
+        float d = microfacetDistribution;
+        vec3 f = specularReflectance;
+        float g = specularAttenuation;
+        specularBRDF = (d * f * g) / (4.0 * NdotL * NdotV);
+    }
 
-    vec3 diffuseColor = baseColor.rgb;
+    vec3 diffuseColor = baseColor.rgb * (1.0 - metallic);
     vec4 diffuse = vec4(diffuseColor * NdotL, 1.0);
     vec4 specular = vec4(specularInputColor * specularBRDF, 1.0);
 
-    vec4 occlusion = texture2D(u_occlusionTexture, v_occlusionTexCoord);
+    vec4 occlusion = vec4(1.0);
+    if (u_hasOcclusionTexture != 0)
+    {
+        occlusion = texture2D(u_occlusionTexture, v_occlusionTexCoord);
+    }
     vec4 occlusionFactor = vec4(1.0) - ((vec4(1.0) - occlusion) * u_occlusionStrength);
     
-    vec4 emission = texture2D(u_emissionTexture, v_emissionTexCoord) * vec4(u_emissionFactor, 1.0);
+    vec4 sampledEmission = vec4(1.0);
+    if (u_hasEmissionTexture != 0)
+    {
+        sampledEmission = texture2D(u_emissionTexture, v_emissionTexCoord);
+    }
+    vec4 emission = sampledEmission * vec4(u_emissionFactor, 1.0);
     
     vec4 mainColor = clamp(diffuse + specular, 0.0, 1.0);
     vec4 finalColor = clamp(mainColor * occlusionFactor + emission, 0.0, 1.0);
+    
+    //finalColor = vec4(0.0, 0.0, 0.0, 1.0);
+    //finalColor.r = u_metallicFactor;
+    //finalColor.g = u_roughnessFactor;
+    
     gl_FragColor = finalColor;
 }
 
